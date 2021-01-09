@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import RefetchTimer from './RefetchTimer';
 import FilterButtons from './FilterButtons';
+import RefetchProfilesButton from './RefetchProfilesButton';
 
 const Flex = styled.div({
   alignItems: 'baseline',
@@ -12,7 +12,7 @@ const Flex = styled.div({
 
 const Filters = () => (
   <Flex>
-    <RefetchTimer />
+    <RefetchProfilesButton />
 
     <FilterButtons />
   </Flex>
