@@ -76,6 +76,7 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         isFetching: true,
+        isTimerRunning: false,
       };
 
     case 'setProfiles':
@@ -83,6 +84,7 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
         ...state,
         hasFetched: true,
         isFetching: false,
+        isTimerRunning: true,
         profiles: action.payload.profiles,
       };
 

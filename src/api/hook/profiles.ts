@@ -31,7 +31,7 @@ export const useGetProfiles = async () => {
     if (isFetching) {
       const fetchProfiles = async () => {
         try {
-          sleep(1000);
+          await sleep(3000);
 
           const response = await fetch('./profiles.json');
 
