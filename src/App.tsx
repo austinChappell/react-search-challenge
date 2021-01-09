@@ -1,12 +1,14 @@
 import React from 'react';
-import SearchPage from './components/SearchPage';
+
 import ProfilesContextProvider from './components/ProfilesContextProvider';
+import Routes from './components/Routes';
+
 import './styles.css';
 
 function App() {
   return (
     <ProfilesContextProvider>
-      <SearchPage />
+      <Routes />
     </ProfilesContextProvider>
   );
 }

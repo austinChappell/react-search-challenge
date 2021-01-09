@@ -47,12 +47,13 @@ class SearchPage extends React.Component {
           >
             {profiles.map((profile) => (
               <SearchCard
-                key={profile.id}
-                photoUrl={profile.photoUrl}
-                handle={profile.handle}
-                location={profile.location}
                 age={profile.age}
+                handle={profile.handle}
+                id={profile.id}
+                key={profile.id}
+                location={profile.location}
                 photoCount={profile.photoCount}
+                photoUrl={profile.photoUrl}
               />
             ))}
           </div>
