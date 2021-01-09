@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import { ProfileContext } from '../ProfilesContextProvider';
@@ -10,29 +10,24 @@ const Grid = styled.div({
   gridGap: 16,
 });
 
-class Results extends React.Component {
-  static contextType = ProfileContext;
-  context!: React.ContextType<typeof ProfileContext>;
+const Results: FC = () => {
+  const { profiles } = useContext(ProfileContext);
 
-  render() {
-    const { profiles = [] } = this.context;
-
-    return (
-      <Grid>
-        {profiles.map((profile) => (
-          <SearchCard
-            age={profile.age}
-            handle={profile.handle}
-            id={profile.id}
-            key={profile.id}
-            location={profile.location}
-            photoCount={profile.photoCount}
-            photoUrl={profile.photoUrl}
-          />
-        ))}
-      </Grid>
-    );
-  }
-}
+  return (
+    <Grid>
+      {profiles.map((profile) => (
+        <SearchCard
+          age={profile.age}
+          handle={profile.handle}
+          id={profile.id}
+          key={profile.id}
+          location={profile.location}
+          photoCount={profile.photoCount}
+          photoUrl={profile.photoUrl}
+        />
+      ))}
+    </Grid>
+  );
+};
 
 export default Results;

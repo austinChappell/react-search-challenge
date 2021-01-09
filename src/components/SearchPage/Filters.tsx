@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import { ProfileContext } from '../ProfilesContextProvider';
@@ -9,35 +9,32 @@ const ButtonContainer = styled.div({
   justifyContent: 'flex-end',
 });
 
-class Filters extends React.Component {
-  static contextType = ProfileContext;
-  context!: React.ContextType<typeof ProfileContext>;
+const Filters = () => {
+  const { dispatch } = useContext(ProfileContext);
 
-  handleSortAscending = () => {
-    this.context.dispatch({ type: 'ascending' });
-  };
+  const handleSortAscending = useCallback(() => {
+    dispatch({ type: 'ascending' });
+  }, [dispatch]);
 
-  handleSortDescending = () => {
-    this.context.dispatch({ type: 'descending' });
-  };
+  const handleSortDescending = useCallback(() => {
+    dispatch({ type: 'descending' });
+  }, [dispatch]);
 
-  render() {
-    return (
-      <ButtonContainer>
-        <MinimalButton disabled>
-          <img src="filter.svg" width={22} alt="filter" />
-        </MinimalButton>
+  return (
+    <ButtonContainer>
+      <MinimalButton disabled>
+        <img src="filter.svg" width={22} alt="filter" />
+      </MinimalButton>
 
-        <MinimalButton onClick={this.handleSortAscending}>
-          <img src="./ascending.svg" width={22} alt="Sort ascending" />
-        </MinimalButton>
+      <MinimalButton onClick={handleSortAscending}>
+        <img src="./ascending.svg" width={22} alt="Sort ascending" />
+      </MinimalButton>
 
-        <MinimalButton onClick={this.handleSortDescending}>
-          <img src="./descending.svg" width={22} alt="Sort descending" />
-        </MinimalButton>
-      </ButtonContainer>
-    );
-  }
-}
+      <MinimalButton onClick={handleSortDescending}>
+        <img src="./descending.svg" width={22} alt="Sort descending" />
+      </MinimalButton>
+    </ButtonContainer>
+  );
+};
 
 export default Filters;
