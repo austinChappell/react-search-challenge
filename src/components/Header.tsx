@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default function Header() {
+const Header = () => {
   return (
     <header
       style={{
@@ -11,4 +9,6 @@ export default function Header() {
       <img src="./logo.svg" alt="match" width="110" />
     </header>
   );
-}
+};
+
+export default Header;

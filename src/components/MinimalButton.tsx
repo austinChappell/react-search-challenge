@@ -1,6 +1,8 @@
-import React from 'react';
+import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
 
-function MinimalButton({ children, onClick, style, ...props }) {
+type Props = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+
+const MinimalButton: FC<Props> = ({ children, onClick, style, ...props }) => {
   return (
     <button
       {...props}
@@ -10,6 +12,6 @@ function MinimalButton({ children, onClick, style, ...props }) {
       {children}
     </button>
   );
-}
+};
 
 export default MinimalButton;

@@ -6,6 +6,7 @@ import SearchCard from './SearchCard';
 
 class SearchPage extends React.Component {
   static contextType = ProfileContext;
+  context!: React.ContextType<typeof ProfileContext>;
 
   handleSortAscending = () => {
     this.context.dispatch({ type: 'ascending' });
