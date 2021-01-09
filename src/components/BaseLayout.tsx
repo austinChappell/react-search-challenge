@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 const Header = styled.header({
   borderBottom: `1px solid #efefef`,
@@ -13,7 +14,9 @@ const Main = styled.main({
 const BaseLayout: FC = ({ children }) => (
   <>
     <Header>
-      <img src="./logo.svg" alt="match" width="110" />
+      <Link to="/">
+        <img src="./logo.svg" alt="match" width="110" />
+      </Link>
     </Header>
 
     <Main>{children}</Main>
