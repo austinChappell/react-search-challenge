@@ -1,17 +1,29 @@
 import React, { Dispatch, FC, Reducer } from 'react';
-import mockProfiles from '../profiles.json';
 
 interface State {
   dispatch: Dispatch<Action>;
+  hasFetched: boolean;
   profiles: Profile[];
 }
 
-interface Action {
-  type: 'ascending' | 'descending';
+interface AscendingAction {
+  type: 'ascending';
+}
+interface DescendingAction {
+  type: 'descending';
+}
+interface SetProfilesAction {
+  payload: {
+    profiles: Profile[];
+  };
+  type: 'setProfiles';
 }
 
+type Action = AscendingAction | DescendingAction | SetProfilesAction;
+
 const initialState: Omit<State, 'dispatch'> = {
-  profiles: mockProfiles,
+  hasFetched: false,
+  profiles: [],
 };
 
 export const ProfileContext = React.createContext(initialState as State);
@@ -34,6 +46,13 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         profiles,
+      };
+
+    case 'setProfiles':
+      return {
+        ...state,
+        hasFetched: true,
+        profiles: action.payload.profiles,
       };
 
     default:
