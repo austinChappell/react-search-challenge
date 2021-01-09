@@ -1,6 +1,7 @@
 import React, { Dispatch, FC, Reducer } from 'react';
 
 interface State {
+  byId: Record<number, Profile>;
   dispatch: Dispatch<Action>;
   errorMessage: string | null;
   hasFetched: boolean;
@@ -56,6 +57,7 @@ type Action =
   | ToggleTimerAction;
 
 const initialState: Omit<State, 'dispatch'> = {
+  byId: {},
   errorMessage: null,
   hasFetched: false,
   isFetching: false,
@@ -104,8 +106,21 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
       };
 
     case 'setProfiles':
+      const byId: Record<number, Profile> = action.payload.profiles.reduce(
+        (prev: Record<number, Profile>, curr) => {
+          prev[curr.id] = curr;
+
+          return prev;
+        },
+        {}
+      );
+
       return {
         ...state,
+        byId: {
+          ...state.byId,
+          ...byId,
+        },
         errorMessage: null,
         hasFetched: true,
         isFetching: false,

@@ -6,7 +6,9 @@ function sleep(ms: number) {
 export const fetchProfiles = async (isFiltered: boolean) => {
   await sleep(500);
 
-  const response = await fetch('./profiles.json');
+  const baseUrl = window.location.origin;
+
+  const response = await fetch(`${baseUrl}/profiles.json`);
 
   const profiles: Profile[] = await response.json();
 
