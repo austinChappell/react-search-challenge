@@ -1,13 +1,14 @@
 import React, { Dispatch, FC, Reducer } from 'react';
 
+type ProfileById = Record<number, Profile>;
+
 interface State {
-  byId: Record<number, Profile>;
+  byId: ProfileById;
   dispatch: Dispatch<Action>;
   errorMessage: string | null;
   hasFetched: boolean;
   isFetching: boolean;
   isFiltered: boolean;
-  isTimerRunning: boolean;
   profiles: Profile[];
 }
 
@@ -35,9 +36,6 @@ interface SetProfilesAction {
 interface ToggleFilterAction {
   type: 'toggleIsFiltered';
 }
-interface ToggleTimerAction {
-  type: 'toggleIsTimerRunning';
-}
 
 type Action =
   | AscendingAction
@@ -45,8 +43,7 @@ type Action =
   | FetchProfilesAction
   | FetchProfilesErrorAction
   | SetProfilesAction
-  | ToggleFilterAction
-  | ToggleTimerAction;
+  | ToggleFilterAction;
 
 const initialState: Omit<State, 'dispatch'> = {
   byId: {},
@@ -54,7 +51,6 @@ const initialState: Omit<State, 'dispatch'> = {
   hasFetched: false,
   isFetching: false,
   isFiltered: false,
-  isTimerRunning: true,
   profiles: [],
 };
 
@@ -97,12 +93,11 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
       };
 
     case 'setProfiles':
-      const byId: Record<number, Profile> = action.payload.profiles.reduce(
-        (prev: Record<number, Profile>, curr) => {
-          prev[curr.id] = curr;
-
-          return prev;
-        },
+      const byId: ProfileById = action.payload.profiles.reduce(
+        (prev: ProfileById, curr) => ({
+          ...prev,
+          [curr.id]: curr,
+        }),
         {}
       );
 
@@ -127,12 +122,6 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
         errorMessage: null,
         isFiltered,
         isFetching: true,
-      };
-
-    case 'toggleIsTimerRunning':
-      return {
-        ...state,
-        isTimerRunning: !state.isTimerRunning,
       };
 
     default:

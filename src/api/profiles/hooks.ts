@@ -40,13 +40,10 @@ export const useGetProfiles = async () => {
 };
 
 export const useGetProfile = (id: number) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  // have to get all right now since there is not a live API
+  useGetProfiles();
 
-  const { profiles } = useContext(ProfileContext);
+  const { byId } = useContext(ProfileContext);
 
-  useEffect(() => {
-    setProfile(profiles.find((profile) => profile.id === id) ?? null);
-  }, [id, profiles]);
-
-  return profile;
+  return byId[id];
 };

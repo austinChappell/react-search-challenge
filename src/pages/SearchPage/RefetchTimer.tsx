@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import MinimalButton from 'components/shared/MinimalButton';
 import { useRepeatedTimer } from 'hooks/useRepeatedTimer';
-import { FC, useCallback, useContext, useEffect } from 'react';
+import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 
 const ErrorMessage = styled.span({
@@ -13,7 +13,9 @@ const Wrapper = styled.div({
 });
 
 const RefetchTimer: FC = () => {
-  const { dispatch, errorMessage, isFetching, isTimerRunning } = useContext(ProfileContext);
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+
+  const { dispatch, errorMessage, isFetching } = useContext(ProfileContext);
 
   const handleRefetchProfiles = useCallback(() => {
     dispatch({
@@ -26,10 +28,8 @@ const RefetchTimer: FC = () => {
   });
 
   const handleClick = useCallback(() => {
-    dispatch({
-      type: 'toggleIsTimerRunning',
-    });
-  }, [dispatch]);
+    setIsTimerRunning((isRunning) => !isRunning);
+  }, [setIsTimerRunning]);
 
   useEffect(() => {
     if (isFetching) {

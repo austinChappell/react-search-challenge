@@ -1,4 +1,4 @@
-import { useGetProfile, useGetProfiles } from 'api/profiles/hooks';
+import { useGetProfile } from 'api/profiles/hooks';
 import { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProfileContext } from 'state/ProfilesContextProvider';
@@ -6,14 +6,9 @@ import { ProfileContext } from 'state/ProfilesContextProvider';
 const ProfilePage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { isFetching, profiles } = useContext(ProfileContext);
-
-  useGetProfiles();
+  const { isFetching } = useContext(ProfileContext);
 
   const profile = useGetProfile(Number(id));
-
-  console.log('the profile : ', profile);
-  console.log('profiles : ', profiles);
 
   if (isFetching) {
     return <p>Loading...</p>;
