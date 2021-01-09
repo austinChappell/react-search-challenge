@@ -15,7 +15,6 @@ const FilterButtons = () => {
   }, [dispatch]);
 
   const handleToggleFilter = useCallback(() => {
-    console.log('dispatching');
     dispatch({ type: 'toggleIsFiltered' });
   }, [dispatch]);
 
