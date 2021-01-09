@@ -2,8 +2,10 @@ import React, { Dispatch, FC, Reducer } from 'react';
 
 interface State {
   dispatch: Dispatch<Action>;
+  errorMessage: string | null;
   hasFetched: boolean;
   isFetching: boolean;
+  isFiltered: boolean;
   isTimerRunning: boolean;
   profiles: Profile[];
   secondsUntilRefetch: number;
@@ -18,6 +20,12 @@ interface DescendingAction {
 interface FetchProfilesAction {
   type: 'fetchProfiles';
 }
+interface FetchProfilesErrorAction {
+  payload: {
+    errorMessage: string;
+  };
+  type: 'fetchProfilesError';
+}
 interface SetProfilesAction {
   payload: {
     profiles: Profile[];
@@ -30,6 +38,9 @@ interface SetTimerAction {
   };
   type: 'setTimer';
 }
+interface ToggleFilterAction {
+  type: 'toggleIsFiltered';
+}
 interface ToggleTimerAction {
   type: 'toggleIsTimerRunning';
 }
@@ -38,13 +49,17 @@ type Action =
   | AscendingAction
   | DescendingAction
   | FetchProfilesAction
+  | FetchProfilesErrorAction
   | SetProfilesAction
   | SetTimerAction
+  | ToggleFilterAction
   | ToggleTimerAction;
 
 const initialState: Omit<State, 'dispatch'> = {
+  errorMessage: null,
   hasFetched: false,
   isFetching: false,
+  isFiltered: false,
   isTimerRunning: true,
   profiles: [],
   secondsUntilRefetch: 10,
@@ -75,13 +90,23 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
     case 'fetchProfiles':
       return {
         ...state,
+        errorMessage: null,
         isFetching: true,
+        isTimerRunning: false,
+      };
+
+    case 'fetchProfilesError':
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage,
+        isFetching: false,
         isTimerRunning: false,
       };
 
     case 'setProfiles':
       return {
         ...state,
+        errorMessage: null,
         hasFetched: true,
         isFetching: false,
         isTimerRunning: true,
@@ -93,6 +118,16 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
         ...state,
         hasFetched: true,
         secondsUntilRefetch: action.payload.seconds,
+      };
+
+    case 'toggleIsFiltered':
+      const isFiltered = !state.isFiltered;
+
+      return {
+        ...state,
+        errorMessage: null,
+        isFiltered,
+        isFetching: true,
       };
 
     case 'toggleIsTimerRunning':

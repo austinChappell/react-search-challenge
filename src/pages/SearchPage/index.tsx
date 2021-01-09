@@ -1,4 +1,4 @@
-import { useGetProfiles } from 'api/hook/profiles';
+import { useGetProfiles } from 'api/profiles/hooks';
 import React, { FC } from 'react';
 
 import Filters from './Filters';

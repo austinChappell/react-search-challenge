@@ -22,12 +22,17 @@ const Filters = () => {
     dispatch({ type: 'descending' });
   }, [dispatch]);
 
+  const handleToggleFilter = useCallback(() => {
+    console.log('dispatching');
+    dispatch({ type: 'toggleIsFiltered' });
+  }, [dispatch]);
+
   return (
     <Flex>
       <RefetchTimer />
 
       <div>
-        <MinimalButton disabled>
+        <MinimalButton onClick={handleToggleFilter}>
           <img src="filter.svg" width={22} alt="filter" />
         </MinimalButton>
 

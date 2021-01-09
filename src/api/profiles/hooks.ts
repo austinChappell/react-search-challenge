@@ -1,16 +1,12 @@
 import { useRepeatedTimer } from 'hooks/useRepeatedTimer';
 import { useContext, useEffect } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
-
-// using this mock an API delay
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { fetchProfiles } from '.';
 
 export const useFetchProfilesTimer = () => {
-  const { dispatch, isTimerRunning } = useContext(ProfileContext);
+  const { dispatch, isFiltered, isTimerRunning } = useContext(ProfileContext);
 
-  const seconds = useRepeatedTimer(10, isTimerRunning);
+  const { reset, seconds } = useRepeatedTimer(10, isTimerRunning);
 
   useEffect(() => {
     dispatch({
@@ -20,35 +16,42 @@ export const useFetchProfilesTimer = () => {
       type: 'setTimer',
     });
   }, [dispatch, seconds]);
+
+  useEffect(() => {
+    reset();
+  }, [isFiltered, reset]);
 };
 
 export const useGetProfiles = async () => {
-  const { dispatch, hasFetched, isFetching, secondsUntilRefetch } = useContext(ProfileContext);
+  const { dispatch, hasFetched, isFetching, isFiltered, secondsUntilRefetch } = useContext(
+    ProfileContext
+  );
 
   useFetchProfilesTimer();
 
   useEffect(() => {
     if (isFetching) {
-      const fetchProfiles = async () => {
+      const getProfiles = async () => {
         try {
-          await sleep(3000);
-
-          const response = await fetch('./profiles.json');
-
-          const profiles: Profile[] = await response.json();
+          const profiles = await fetchProfiles(isFiltered);
 
           dispatch({
             payload: { profiles },
             type: 'setProfiles',
           });
         } catch (error) {
-          console.error('error fetching profiles : ', error);
+          dispatch({
+            payload: {
+              errorMessage: 'Error getting profiles.',
+            },
+            type: 'fetchProfilesError',
+          });
         }
       };
 
-      fetchProfiles();
+      getProfiles();
     }
-  }, [dispatch, isFetching]);
+  }, [dispatch, isFetching, isFiltered]);
 
   useEffect(() => {
     if (!hasFetched || secondsUntilRefetch === 0) {
