@@ -4,6 +4,7 @@ import { FC, useCallback, useContext } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 import ErrorMessage from 'components/shared/ErrorMessage';
 import RefetchTimer from 'components/shared/RefetchTimer';
+import { getProfiles } from 'api/profiles';
 
 const Wrapper = styled.div({
   alignItems: 'center',
@@ -14,9 +15,7 @@ const RefetchProfilesButton: FC = () => {
   const { dispatch, errorMessage, isFetching } = useContext(ProfileContext);
 
   const handleRefetchProfiles = useCallback(() => {
-    dispatch({
-      type: 'fetchProfiles',
-    });
+    getProfiles(dispatch);
   }, [dispatch]);
 
   if (isFetching) {

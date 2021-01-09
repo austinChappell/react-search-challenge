@@ -1,42 +1,23 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
-import { fetchProfiles } from '.';
+import { getProfiles } from '.';
 
-export const useGetProfiles = async () => {
-  const { dispatch, hasFetched, isFetching, isFiltered } = useContext(ProfileContext);
+export const useGetProfiles = () => {
+  const { dispatch, hasFetched, isFiltered, profiles } = useContext(ProfileContext);
 
-  useEffect(() => {
-    if (isFetching) {
-      const getProfiles = async () => {
-        try {
-          const profiles = await fetchProfiles(isFiltered);
-
-          dispatch({
-            payload: { profiles },
-            type: 'setProfiles',
-          });
-        } catch (error) {
-          console.error(error);
-          dispatch({
-            payload: {
-              errorMessage: 'Error getting profiles.',
-            },
-            type: 'fetchProfilesError',
-          });
-        }
-      };
-
-      getProfiles();
-    }
-  }, [dispatch, isFetching, isFiltered]);
+  const [localProfiles, setLocalProfiles] = useState(profiles);
 
   useEffect(() => {
     if (!hasFetched) {
-      dispatch({
-        type: 'fetchProfiles',
-      });
+      getProfiles(dispatch);
     }
   }, [dispatch, hasFetched]);
+
+  useEffect(() => {
+    setLocalProfiles(isFiltered ? profiles.filter((profile) => profile.age < 30) : profiles);
+  }, [isFiltered, profiles]);
+
+  return localProfiles;
 };
 
 export const useGetProfile = (id: number) => {

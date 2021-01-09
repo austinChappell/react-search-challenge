@@ -4,7 +4,7 @@ type ProfileById = Record<number, Profile>;
 
 interface State {
   byId: ProfileById;
-  dispatch: Dispatch<Action>;
+  dispatch: Dispatch<ProfilesContextAction>;
   errorMessage: string | null;
   hasFetched: boolean;
   isFetching: boolean;
@@ -37,7 +37,7 @@ interface ToggleFilterAction {
   type: 'toggleIsFiltered';
 }
 
-type Action =
+export type ProfilesContextAction =
   | AscendingAction
   | DescendingAction
   | FetchProfilesAction
@@ -56,7 +56,7 @@ const initialState: Omit<State, 'dispatch'> = {
 
 export const ProfileContext = React.createContext(initialState as State);
 
-const profilesReducer: Reducer<State, Action> = (state, action) => {
+const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) => {
   let profiles;
 
   switch (action.type) {
@@ -130,7 +130,7 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
 };
 
 const ProfilesContextProvider: FC = ({ children }) => {
-  const [state, dispatch] = React.useReducer<Reducer<State, Action>>(
+  const [state, dispatch] = React.useReducer<Reducer<State, ProfilesContextAction>>(
     profilesReducer,
     initialState as State
   );
