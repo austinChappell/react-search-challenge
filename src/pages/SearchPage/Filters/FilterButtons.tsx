@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 
-import { ProfileContext } from '../../../state/ProfilesContextProvider';
-import MinimalButton from '../../../components/shared/MinimalButton';
+import { ProfileContext } from 'state/ProfilesContextProvider';
+import MinimalButton from 'components/shared/MinimalButton';
 
 const FilterButtons = () => {
   const { dispatch } = useContext(ProfileContext);
