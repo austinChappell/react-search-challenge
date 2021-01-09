@@ -9,7 +9,6 @@ interface State {
   isFiltered: boolean;
   isTimerRunning: boolean;
   profiles: Profile[];
-  secondsUntilRefetch: number;
 }
 
 interface AscendingAction {
@@ -33,12 +32,6 @@ interface SetProfilesAction {
   };
   type: 'setProfiles';
 }
-interface SetTimerAction {
-  payload: {
-    seconds: number;
-  };
-  type: 'setTimer';
-}
 interface ToggleFilterAction {
   type: 'toggleIsFiltered';
 }
@@ -52,7 +45,6 @@ type Action =
   | FetchProfilesAction
   | FetchProfilesErrorAction
   | SetProfilesAction
-  | SetTimerAction
   | ToggleFilterAction
   | ToggleTimerAction;
 
@@ -64,7 +56,6 @@ const initialState: Omit<State, 'dispatch'> = {
   isFiltered: false,
   isTimerRunning: true,
   profiles: [],
-  secondsUntilRefetch: 10,
 };
 
 export const ProfileContext = React.createContext(initialState as State);
@@ -126,13 +117,6 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
         isFetching: false,
         isTimerRunning: true,
         profiles: action.payload.profiles,
-      };
-
-    case 'setTimer':
-      return {
-        ...state,
-        hasFetched: true,
-        secondsUntilRefetch: action.payload.seconds,
       };
 
     case 'toggleIsFiltered':

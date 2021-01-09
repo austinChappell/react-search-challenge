@@ -1,42 +1,15 @@
-import { useRepeatedTimer } from 'hooks/useRepeatedTimer';
 import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 import { fetchProfiles } from '.';
 
-export const useFetchProfilesTimer = () => {
-  const { dispatch, isFiltered, isTimerRunning } = useContext(ProfileContext);
-
-  const { reset, seconds } = useRepeatedTimer(10, isTimerRunning);
-
-  useEffect(() => {
-    dispatch({
-      payload: {
-        seconds,
-      },
-      type: 'setTimer',
-    });
-  }, [dispatch, seconds]);
-
-  useEffect(() => {
-    reset();
-  }, [isFiltered, reset]);
-};
-
 export const useGetProfiles = async () => {
-  const { dispatch, hasFetched, isFetching, isFiltered, secondsUntilRefetch } = useContext(
-    ProfileContext
-  );
-
-  useFetchProfilesTimer();
+  const { dispatch, hasFetched, isFetching, isFiltered } = useContext(ProfileContext);
 
   useEffect(() => {
     if (isFetching) {
-      console.log('going to get them');
       const getProfiles = async () => {
         try {
           const profiles = await fetchProfiles(isFiltered);
-
-          console.log('dispatching : ', profiles);
 
           dispatch({
             payload: { profiles },
@@ -58,13 +31,12 @@ export const useGetProfiles = async () => {
   }, [dispatch, isFetching, isFiltered]);
 
   useEffect(() => {
-    if (!hasFetched || secondsUntilRefetch === 0) {
-      console.log('lets go get some profiles ');
+    if (!hasFetched) {
       dispatch({
         type: 'fetchProfiles',
       });
     }
-  }, [dispatch, hasFetched, secondsUntilRefetch]);
+  }, [dispatch, hasFetched]);
 };
 
 export const useGetProfile = (id: number) => {

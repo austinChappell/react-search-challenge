@@ -1,6 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export const useRepeatedTimer = (initialSeconds: number, isTimerRunning: boolean) => {
+interface Options {
+  onTimerEnd: () => void;
+}
+
+export const useRepeatedTimer = (
+  initialSeconds: number,
+  isTimerRunning: boolean,
+  options: Options
+) => {
+  const { onTimerEnd } = options;
+
   const [seconds, setSeconds] = useState(initialSeconds);
 
   const reset = useCallback(() => {
@@ -20,12 +30,14 @@ export const useRepeatedTimer = (initialSeconds: number, isTimerRunning: boolean
       if (interval) {
         clearInterval(interval);
       }
-
-      if (seconds === 0) {
-        setSeconds(initialSeconds);
-      }
     };
-  }, [initialSeconds, isTimerRunning, seconds, setSeconds]);
+  }, [initialSeconds, isTimerRunning, setSeconds]);
+
+  useEffect(() => {
+    if (seconds === 0) {
+      onTimerEnd();
+    }
+  }, [onTimerEnd, seconds]);
 
   return {
     reset,
