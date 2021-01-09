@@ -2,11 +2,11 @@ import React, { FC, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import { ProfileContext } from '../ProfilesContextProvider';
-import SearchCard from '../SearchCard';
+import SearchCard from './SearchCard';
 
 const Grid = styled.div({
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr 1fr',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
   gridGap: 16,
 });
 
