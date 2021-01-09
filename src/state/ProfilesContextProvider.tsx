@@ -121,7 +121,6 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
         ...state,
         errorMessage: null,
         isFiltered,
-        isFetching: true,
       };
 
     default:

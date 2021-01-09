@@ -3,15 +3,15 @@ import { ProfileContext } from 'state/ProfilesContextProvider';
 import { getProfiles } from '.';
 
 export const useGetProfiles = () => {
-  const { dispatch, hasFetched, isFiltered, profiles } = useContext(ProfileContext);
+  const { dispatch, hasFetched, isFetching, isFiltered, profiles } = useContext(ProfileContext);
 
   const [localProfiles, setLocalProfiles] = useState(profiles);
 
   useEffect(() => {
-    if (!hasFetched) {
+    if (!hasFetched && !isFetching) {
       getProfiles(dispatch);
     }
-  }, [dispatch, hasFetched]);
+  }, [dispatch, hasFetched, isFetching]);
 
   useEffect(() => {
     setLocalProfiles(isFiltered ? profiles.filter((profile) => profile.age < 30) : profiles);

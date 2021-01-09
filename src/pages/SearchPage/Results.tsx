@@ -1,9 +1,8 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 
-import { ProfileContext } from 'state/ProfilesContextProvider';
-
 import SearchCard from './SearchCard';
+import { useGetProfiles } from 'api/profiles/hooks';
 
 const Grid = styled.div({
   display: 'grid',
@@ -12,7 +11,7 @@ const Grid = styled.div({
 });
 
 const Results: FC = () => {
-  const { profiles } = useContext(ProfileContext);
+  const profiles = useGetProfiles();
 
   return (
     <Grid>
