@@ -1,13 +1,15 @@
+import styled from '@emotion/styled';
+
+const StyledHeader = styled.header({
+  borderBottom: `1px solid #efefef`,
+  padding: 16,
+});
+
 const Header = () => {
   return (
-    <header
-      style={{
-        borderBottom: `1px solid #efefef`,
-        padding: '16px',
-      }}
-    >
+    <StyledHeader>
       <img src="./logo.svg" alt="match" width="110" />
-    </header>
+    </StyledHeader>
   );
 };
 

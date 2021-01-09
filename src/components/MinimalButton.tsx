@@ -1,17 +1,10 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
+import styled from '@emotion/styled';
 
-type Props = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-
-const MinimalButton: FC<Props> = ({ children, onClick, style, ...props }) => {
-  return (
-    <button
-      {...props}
-      onClick={onClick}
-      style={{ background: 'transparent', border: 0, cursor: 'pointer', margin: 8, ...style }}
-    >
-      {children}
-    </button>
-  );
-};
+const MinimalButton = styled.button({
+  background: 'transparent',
+  border: 0,
+  cursor: 'pointer',
+  margin: 8,
+});
 
 export default MinimalButton;
