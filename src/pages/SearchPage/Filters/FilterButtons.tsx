@@ -4,7 +4,7 @@ import { ProfileContext } from 'state/ProfilesContextProvider';
 import MinimalButton from 'components/shared/MinimalButton';
 
 const FilterButtons = () => {
-  const { dispatch } = useContext(ProfileContext);
+  const { dispatch, isFiltered } = useContext(ProfileContext);
 
   const handleSortAscending = useCallback(() => {
     dispatch({ type: 'ascending' });
@@ -21,7 +21,7 @@ const FilterButtons = () => {
   return (
     <div>
       <MinimalButton onClick={handleToggleFilter}>
-        <img src="filter.svg" width={22} alt="filter" />
+        <img src={isFiltered ? 'filter.svg' : 'filter-empty.svg'} width={22} alt="filter" />
       </MinimalButton>
 
       <MinimalButton onClick={handleSortAscending}>
