@@ -15,7 +15,7 @@ const BaseLayout: FC = ({ children }) => (
   <>
     <Header>
       <Link to="/">
-        <img src="./logo.svg" alt="match" width="110" />
+        <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="match" width="110" />
       </Link>
     </Header>
 

@@ -6,7 +6,7 @@ import { ProfileContext } from 'state/ProfilesContextProvider';
 const ProfilePage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { profiles } = useContext(ProfileContext);
+  const { isFetching, profiles } = useContext(ProfileContext);
 
   useGetProfiles();
 
@@ -15,7 +15,21 @@ const ProfilePage: FC = () => {
   console.log('the profile : ', profile);
   console.log('profiles : ', profiles);
 
-  return <div>Profile Page</div>;
+  if (isFetching) {
+    return <p>Loading...</p>;
+  }
+
+  if (!profile) {
+    return <p>Profile not found...</p>;
+  }
+
+  return (
+    <>
+      <h2>{profile.handle}</h2>
+
+      <img alt="potential date" src={profile.photoUrl} />
+    </>
+  );
 };
 
 export default ProfilePage;
