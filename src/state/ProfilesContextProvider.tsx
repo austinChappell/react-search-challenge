@@ -3,6 +3,7 @@ import React, { Dispatch, FC, Reducer } from 'react';
 interface State {
   dispatch: Dispatch<Action>;
   hasFetched: boolean;
+  isFetching: boolean;
   isTimerRunning: boolean;
   profiles: Profile[];
   secondsUntilRefetch: number;
@@ -13,6 +14,9 @@ interface AscendingAction {
 }
 interface DescendingAction {
   type: 'descending';
+}
+interface FetchProfilesAction {
+  type: 'fetchProfiles';
 }
 interface SetProfilesAction {
   payload: {
@@ -33,12 +37,14 @@ interface ToggleTimerAction {
 type Action =
   | AscendingAction
   | DescendingAction
+  | FetchProfilesAction
   | SetProfilesAction
   | SetTimerAction
   | ToggleTimerAction;
 
 const initialState: Omit<State, 'dispatch'> = {
   hasFetched: false,
+  isFetching: false,
   isTimerRunning: true,
   profiles: [],
   secondsUntilRefetch: 10,
@@ -66,10 +72,17 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
         profiles,
       };
 
+    case 'fetchProfiles':
+      return {
+        ...state,
+        isFetching: true,
+      };
+
     case 'setProfiles':
       return {
         ...state,
         hasFetched: true,
+        isFetching: false,
         profiles: action.payload.profiles,
       };
 

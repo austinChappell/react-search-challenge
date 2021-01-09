@@ -2,6 +2,11 @@ import { useRepeatedTimer } from 'hooks/useRepeatedTimer';
 import { useContext, useEffect } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 
+// using this mock an API delay
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const useFetchProfilesTimer = () => {
   const { dispatch, isTimerRunning } = useContext(ProfileContext);
 
@@ -18,28 +23,38 @@ export const useFetchProfilesTimer = () => {
 };
 
 export const useGetProfiles = async () => {
-  const { dispatch, hasFetched, secondsUntilRefetch } = useContext(ProfileContext);
+  const { dispatch, hasFetched, isFetching, secondsUntilRefetch } = useContext(ProfileContext);
 
   useFetchProfilesTimer();
 
   useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await fetch('./profiles.json');
+    if (isFetching) {
+      const fetchProfiles = async () => {
+        try {
+          sleep(1000);
 
-        const profiles: Profile[] = await response.json();
+          const response = await fetch('./profiles.json');
 
-        dispatch({
-          payload: { profiles },
-          type: 'setProfiles',
-        });
-      } catch (error) {
-        console.error('error fetching profiles : ', error);
-      }
-    };
+          const profiles: Profile[] = await response.json();
 
-    if (!hasFetched || secondsUntilRefetch === 0) {
+          dispatch({
+            payload: { profiles },
+            type: 'setProfiles',
+          });
+        } catch (error) {
+          console.error('error fetching profiles : ', error);
+        }
+      };
+
       fetchProfiles();
+    }
+  }, [dispatch, isFetching]);
+
+  useEffect(() => {
+    if (!hasFetched || secondsUntilRefetch === 0) {
+      dispatch({
+        type: 'fetchProfiles',
+      });
     }
   }, [dispatch, hasFetched, secondsUntilRefetch]);
 };
