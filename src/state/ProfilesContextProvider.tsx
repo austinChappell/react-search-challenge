@@ -3,7 +3,9 @@ import React, { Dispatch, FC, Reducer } from 'react';
 interface State {
   dispatch: Dispatch<Action>;
   hasFetched: boolean;
+  isTimerRunning: boolean;
   profiles: Profile[];
+  secondsUntilRefetch: number;
 }
 
 interface AscendingAction {
@@ -18,12 +20,28 @@ interface SetProfilesAction {
   };
   type: 'setProfiles';
 }
+interface SetTimerAction {
+  payload: {
+    seconds: number;
+  };
+  type: 'setTimer';
+}
+interface ToggleTimerAction {
+  type: 'toggleIsTimerRunning';
+}
 
-type Action = AscendingAction | DescendingAction | SetProfilesAction;
+type Action =
+  | AscendingAction
+  | DescendingAction
+  | SetProfilesAction
+  | SetTimerAction
+  | ToggleTimerAction;
 
 const initialState: Omit<State, 'dispatch'> = {
   hasFetched: false,
+  isTimerRunning: true,
   profiles: [],
+  secondsUntilRefetch: 10,
 };
 
 export const ProfileContext = React.createContext(initialState as State);
@@ -53,6 +71,19 @@ const profilesReducer: Reducer<State, Action> = (state, action) => {
         ...state,
         hasFetched: true,
         profiles: action.payload.profiles,
+      };
+
+    case 'setTimer':
+      return {
+        ...state,
+        hasFetched: true,
+        secondsUntilRefetch: action.payload.seconds,
+      };
+
+    case 'toggleIsTimerRunning':
+      return {
+        ...state,
+        isTimerRunning: !state.isTimerRunning,
       };
 
     default:

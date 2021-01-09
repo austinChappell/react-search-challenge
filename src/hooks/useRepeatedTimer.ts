@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react';
 
-export const useRepeatedTimer = (initialSeconds: number, onTimerEnd: () => void) => {
+export const useRepeatedTimer = (initialSeconds: number, isTimerRunning: boolean) => {
   const [seconds, setSeconds] = useState(initialSeconds);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((sec) => (sec === 0 ? 10 : sec - 1));
-    }, 1000);
+    let interval: NodeJS.Timeout;
+
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setSeconds((sec) => (sec === 0 ? 10 : sec - 1));
+      }, 1000);
+    }
 
     return () => {
-      clearInterval(interval);
-    };
-  }, [setSeconds]);
+      if (interval) {
+        clearInterval(interval);
+      }
 
-  useEffect(() => {
-    if (seconds === 0) {
-      onTimerEnd();
-    }
-  }, [onTimerEnd, seconds]);
+      if (seconds === 0) {
+        setSeconds(initialSeconds);
+      }
+    };
+  }, [initialSeconds, isTimerRunning, seconds, setSeconds]);
 
   return seconds;
 };
