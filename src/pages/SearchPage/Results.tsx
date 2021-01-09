@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import styled from '@emotion/styled';
 
-import { ProfileContext } from '../ProfilesContextProvider';
+import { ProfileContext } from '../../components/ProfilesContextProvider';
 import SearchCard from './SearchCard';
 
 const Grid = styled.div({

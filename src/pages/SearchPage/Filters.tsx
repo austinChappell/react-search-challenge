@@ -1,8 +1,8 @@
 import React, { useCallback, useContext } from 'react';
 import styled from '@emotion/styled';
 
-import { ProfileContext } from '../ProfilesContextProvider';
-import MinimalButton from '../MinimalButton';
+import { ProfileContext } from '../../components/ProfilesContextProvider';
+import MinimalButton from '../../components/MinimalButton';
 
 const ButtonContainer = styled.div({
   display: 'flex',
