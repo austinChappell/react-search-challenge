@@ -1,11 +1,11 @@
 // External Dependencies
 import styled from '@emotion/styled';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 
 // Internal Dependencies
 import { getProfiles } from 'api/profiles';
 import MinimalButton from 'components/shared/MinimalButton';
-import { useProfilesDispatch } from 'state/hooks';
+import { useProfilesDispatch, useProfilesState } from 'state/hooks';
 import { getPublichPath } from 'utils/getPublicPath';
 
 // Local Dependencies
@@ -49,13 +49,20 @@ const RefetchTimer: FC<Props> = ({
     handleClick();
   }, [dispatch, handleClick]);
 
+  const handleTimerEnd = useCallback(() => {
+    // make sure the API is not called repeatedly when the user is away
+    if (document.hasFocus()) {
+      onTimerEnd();
+    }
+  }, []);
+
   return (
     <Wrapper>
       <InfiniteProgressBar
         direction="reverse"
         intervalInSeconds={refetchInterval}
         isPaused={!isTimerRunning || isFetching}
-        onRepeat={onTimerEnd}
+        onRepeat={handleTimerEnd}
       />
 
       <MinimalButton onClick={handleClick}>
