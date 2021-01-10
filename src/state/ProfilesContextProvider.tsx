@@ -161,7 +161,6 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
 
       return {
         ...state,
-        errorMessage: null,
         isFiltered,
       };
 
