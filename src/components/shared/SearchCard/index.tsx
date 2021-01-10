@@ -1,7 +1,16 @@
+// External Dependencies
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
+
+// Local Dependencies
 import UserInfo, { UserInfoProps } from './UserInfo';
 
+// Local Typings
+interface Props extends UserInfoProps {
+  picture: UserListUser['picture'];
+}
+
+// Local Variables
 const Card = styled.div({
   alignItems: 'center',
   display: 'flex',
@@ -21,10 +30,7 @@ const Avatar = styled.div({
   width: '200px',
 });
 
-interface Props extends UserInfoProps {
-  picture: UserListUser['picture'];
-}
-
+// Component Definition
 const SearchCard: FC<Props> = ({ dateOfBirth, firstName, location, picture }) => (
   <Card>
     <AvatarContainer>

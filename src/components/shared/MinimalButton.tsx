@@ -1,5 +1,7 @@
+// External Dependencies
 import styled from '@emotion/styled';
 
+// Component Definition
 const MinimalButton = styled.button({
   background: 'transparent',
   border: 0,

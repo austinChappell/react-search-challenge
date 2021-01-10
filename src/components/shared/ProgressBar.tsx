@@ -1,3 +1,4 @@
+// External Dependencies
 import styled from '@emotion/styled';
 import { AnimationEvent, FC } from 'react';
 
@@ -11,6 +12,7 @@ interface Props extends BarProps {
   onRepeat: (evt: AnimationEvent<HTMLDivElement>) => void;
 }
 
+// Local Variables
 const Container = styled.div({
   border: '1px solid black',
   borderRadius: 4,
@@ -34,6 +36,7 @@ const Bar = styled.div<BarProps>(({ direction, intervalInSeconds, isPaused }) =>
   }),
 }));
 
+// Component Definition
 const InfiniteProgressBar: FC<Props> = ({ direction, intervalInSeconds, isPaused, onRepeat }) => {
   return (
     <Container>

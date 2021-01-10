@@ -1,14 +1,20 @@
+// External Dependencies
 import styled from '@emotion/styled';
+import { FC, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+
+// Internal Dependencies
 import { useGetProfile } from 'api/profiles/hooks';
 import ErrorMessage from 'components/shared/ErrorMessage';
 import LoadingSpinner from 'components/shared/LoadingSpinner';
 import SearchCard from 'components/shared/SearchCard';
-import { FC, useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import { ProfileContext } from 'state/ProfilesContextProvider';
+
+// Local Dependencies
 import Contact from './Contact';
 import DetailsCard from './DetailsCard';
 
+// Local Variables
 const Container = styled.section({
   alignItems: 'center',
   display: 'flex',
@@ -16,6 +22,7 @@ const Container = styled.section({
   gap: 24,
 });
 
+// Component Definition
 const ProfilePage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
@@ -30,8 +37,6 @@ const ProfilePage: FC = () => {
   if (!profile) {
     return <ErrorMessage>Profile not found...</ErrorMessage>;
   }
-
-  console.log(profile);
 
   return (
     <Container>

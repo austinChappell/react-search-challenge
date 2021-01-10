@@ -1,10 +1,13 @@
-import React, { useCallback, useContext } from 'react';
+// External Dependencies
+import React, { FC, useCallback, useContext } from 'react';
 
-import { ProfileContext } from 'state/ProfilesContextProvider';
+// Internal Dependencies
 import MinimalButton from 'components/shared/MinimalButton';
+import { ProfileContext } from 'state/ProfilesContextProvider';
 import { getPublichPath } from 'utils/getPublicPath';
 
-const FilterButtons = () => {
+// Component Definition
+const FilterButtons: FC = () => {
   const { dispatch, isFiltered } = useContext(ProfileContext);
 
   const handleSortAscending = useCallback(() => {

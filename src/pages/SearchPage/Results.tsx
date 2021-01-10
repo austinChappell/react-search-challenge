@@ -1,17 +1,21 @@
-import React, { FC } from 'react';
+// External Dependencies
 import styled from '@emotion/styled';
-
-import SearchCard from '../../components/shared/SearchCard';
-import { useGetProfiles } from 'api/profiles/hooks';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+
+// Internal Dependencies
+import { useGetProfiles } from 'api/profiles/hooks';
+import SearchCard from 'components/shared/SearchCard';
 import { paths } from 'constants/paths';
 
+// Local Variables
 const Grid = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
   gridGap: 16,
 });
 
+// Component Definition
 const Results: FC = () => {
   const profiles = useGetProfiles();
 

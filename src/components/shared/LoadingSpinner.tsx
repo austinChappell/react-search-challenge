@@ -1,8 +1,13 @@
+// External Dependencies
 import { FC } from 'react';
+
+// Internal Dependencies
 import { getPublichPath } from 'utils/getPublicPath';
 
+// Local Dependencies
 import Spin from './Spin';
 
+// Component Definition
 const LoadingSpinner: FC = () => {
   return (
     <Spin>

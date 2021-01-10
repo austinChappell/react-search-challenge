@@ -1,6 +1,8 @@
+// External Dependencies
 import styled from '@emotion/styled';
 import { FC, useMemo } from 'react';
 
+// Local Typings
 interface Props {
   dateOfBirth: UserFullProfile['dateOfBirth'];
   firstName: UserFullProfile['firstName'];
@@ -10,6 +12,7 @@ interface Props {
   registerDate: UserFullProfile['registerDate'];
 }
 
+// Local Variables
 const Card = styled.div({
   border: '1px solid black',
   borderRadius: 8,
@@ -42,6 +45,7 @@ const DetailSpan = styled.span({
   margin: '4px 0',
 });
 
+// Component Definition
 const DetailsCard: FC<Props> = ({
   dateOfBirth,
   firstName,

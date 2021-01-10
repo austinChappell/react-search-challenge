@@ -1,5 +1,7 @@
+// External Dependencies
 import styled from '@emotion/styled';
 
+// Component Definition
 const Spin = styled.span({
   '@keyframes spin': {
     from: {

@@ -1,9 +1,14 @@
+// External Dependencies
 import styled from '@emotion/styled';
+import { FC, useCallback, useContext } from 'react';
+
+// Internal Dependencies
 import { getProfiles } from 'api/profiles';
 import MinimalButton from 'components/shared/MinimalButton';
-import { FC, useCallback, useContext } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 import { getPublichPath } from 'utils/getPublicPath';
+
+// Local Dependencies
 import LoadingSpinner from './LoadingSpinner';
 import InfiniteProgressBar from './ProgressBar';
 
@@ -15,7 +20,9 @@ interface Props {
   onToggleIsTimerRunning: () => void;
 }
 
+// Local Variables
 const refetchInterval = 10;
+
 const Wrapper = styled.div({
   alignItems: 'center',
   display: 'flex',
@@ -23,6 +30,7 @@ const Wrapper = styled.div({
   padding: 8,
 });
 
+// Component Definition
 const RefetchTimer: FC<Props> = ({
   isFetching,
   isTimerRunning,
