@@ -157,11 +157,9 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
       };
 
     case 'toggleIsFiltered':
-      const isFiltered = !state.isFiltered;
-
       return {
         ...state,
-        isFiltered,
+        isFiltered: !state.isFiltered,
       };
 
     case 'toggleIsTimerRunning':
