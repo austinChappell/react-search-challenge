@@ -54,5 +54,11 @@ export const getFullProfile = async (id: string, dispatch: Dispatch<ProfilesCont
     });
   } catch (error) {
     console.error(error);
+    dispatch({
+      payload: {
+        errorMessage: 'Unable to load this profile.',
+      },
+      type: 'fetchFullProfileError',
+    });
   }
 };

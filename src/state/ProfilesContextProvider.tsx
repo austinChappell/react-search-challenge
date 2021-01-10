@@ -6,6 +6,7 @@ interface State {
   byId: ProfileById;
   dispatch: Dispatch<ProfilesContextAction>;
   errorMessage: string | null;
+  fullProfileErrorMessage: string | null;
   hasFetched: boolean;
   isFetching: boolean;
   isFetchingFullProfile: boolean;
@@ -22,6 +23,12 @@ interface DescendingAction {
 }
 interface FetchProfilesAction {
   type: 'fetchProfiles';
+}
+interface FetchFullProfileErrorAction {
+  payload: {
+    errorMessage: string;
+  };
+  type: 'fetchFullProfileError';
 }
 interface FetchProfilesErrorAction {
   payload: {
@@ -55,6 +62,7 @@ export type ProfilesContextAction =
   | AscendingAction
   | DescendingAction
   | FetchProfilesAction
+  | FetchFullProfileErrorAction
   | FetchProfilesErrorAction
   | SetFullProfileAction
   | SetProfilesAction
@@ -65,6 +73,7 @@ export type ProfilesContextAction =
 const initialState: Omit<State, 'dispatch'> = {
   byId: {},
   errorMessage: null,
+  fullProfileErrorMessage: null,
   hasFetched: false,
   isFetching: false,
   isFetchingFullProfile: false,
@@ -101,6 +110,13 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
         errorMessage: null,
         isFetching: true,
         isTimerRunning: false,
+      };
+
+    case 'fetchFullProfileError':
+      return {
+        ...state,
+        fullProfileErrorMessage: action.payload.errorMessage,
+        isFetchingFullProfile: false,
       };
 
     case 'fetchProfilesError':

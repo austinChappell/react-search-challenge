@@ -26,35 +26,37 @@ const Container = styled.section({
 const ProfilePage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { isFetchingFullProfile } = useContext(ProfileContext);
+  const { fullProfileErrorMessage, isFetchingFullProfile } = useContext(ProfileContext);
 
   const profile = useGetProfile(id);
 
   return (
     <Page isLoading={isFetchingFullProfile} title={profile?.firstName ?? 'Profile'}>
-      {profile ? (
-        <Container>
-          <SearchCard
-            dateOfBirth={profile.dateOfBirth}
-            firstName={profile.firstName}
-            picture={profile.picture}
-            location={profile.location}
-          />
+      <Container>
+        {profile ? (
+          <>
+            <SearchCard
+              dateOfBirth={profile.dateOfBirth}
+              firstName={profile.firstName}
+              picture={profile.picture}
+              location={profile.location}
+            />
 
-          <Contact email={profile.email} phone={profile.phone} />
+            <Contact email={profile.email} phone={profile.phone} />
 
-          <DetailsCard
-            dateOfBirth={profile.dateOfBirth}
-            firstName={profile.firstName}
-            gender={profile.gender}
-            lastName={profile.lastName}
-            location={profile.location}
-            registerDate={profile.registerDate}
-          />
-        </Container>
-      ) : (
-        <ErrorMessage>Profile not found...</ErrorMessage>
-      )}
+            <DetailsCard
+              dateOfBirth={profile.dateOfBirth}
+              firstName={profile.firstName}
+              gender={profile.gender}
+              lastName={profile.lastName}
+              location={profile.location}
+              registerDate={profile.registerDate}
+            />
+          </>
+        ) : (
+          <ErrorMessage>{fullProfileErrorMessage ?? 'Profile not found...'}</ErrorMessage>
+        )}
+      </Container>
     </Page>
   );
 };
