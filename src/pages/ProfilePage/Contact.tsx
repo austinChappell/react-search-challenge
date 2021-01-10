@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import MinimalButton from 'components/shared/MinimalButton';
 import { FC } from 'react';
 import { getPublichPath } from 'utils/getPublicPath';
 
@@ -17,13 +16,13 @@ const Container = styled.section({
 const Contact: FC<Props> = ({ email, phone }) => {
   return (
     <Container>
-      <MinimalButton>
+      <a href={`mailto:${email}`}>
         <img alt="message" src={getPublichPath('/email.svg')} width={22} />
-      </MinimalButton>
+      </a>
 
-      <MinimalButton>
+      <a href={`tel:${phone}`}>
         <img alt="call" src={getPublichPath('/phone.svg')} width={22} />
-      </MinimalButton>
+      </a>
     </Container>
   );
 };
