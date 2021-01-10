@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { ProfileContext } from 'state/ProfilesContextProvider';
+import { useEffect, useState } from 'react';
+import { useProfilesDispatch, useProfilesState } from 'state/hooks';
 import { getFullProfile, getProfiles } from '.';
 
 export const useGetProfiles = () => {
-  const { dispatch, hasFetched, isFetching, isFiltered, profiles } = useContext(ProfileContext);
+  const { hasFetched, isFetching, isFiltered, profiles } = useProfilesState();
+  const dispatch = useProfilesDispatch();
 
   const [localProfiles, setLocalProfiles] = useState(profiles);
 
@@ -21,7 +22,8 @@ export const useGetProfiles = () => {
 };
 
 export const useGetProfile = (id: string) => {
-  const { byId, dispatch } = useContext(ProfileContext);
+  const { byId } = useProfilesState();
+  const dispatch = useProfilesDispatch();
 
   useEffect(() => {
     if (!byId[id]) {

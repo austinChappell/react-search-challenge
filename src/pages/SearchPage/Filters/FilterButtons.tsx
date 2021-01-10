@@ -1,11 +1,11 @@
 // External Dependencies
 import styled from '@emotion/styled';
-import React, { FC, useCallback, useContext } from 'react';
+import React, { FC, useCallback } from 'react';
 
 // Internal Dependencies
 import MinimalButton from 'components/shared/MinimalButton';
-import { ProfileContext } from 'state/ProfilesContextProvider';
 import { getPublichPath } from 'utils/getPublicPath';
+import { useProfilesDispatch, useProfilesState } from 'state/hooks';
 
 // Local Variables
 const Container = styled.div({
@@ -16,7 +16,8 @@ const Container = styled.div({
 
 // Component Definition
 const FilterButtons: FC = () => {
-  const { dispatch, isFiltered } = useContext(ProfileContext);
+  const { isFiltered } = useProfilesState();
+  const dispatch = useProfilesDispatch();
 
   const handleSortAscending = useCallback(() => {
     dispatch({ type: 'ascending' });

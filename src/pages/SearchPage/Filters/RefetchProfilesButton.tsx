@@ -1,13 +1,13 @@
 // External Dependencies
 import styled from '@emotion/styled';
-import { FC, useCallback, useContext } from 'react';
+import { FC, useCallback } from 'react';
 
 // Internal Dependencies
 import { getProfiles } from 'api/profiles';
 import ErrorMessage from 'components/shared/ErrorMessage';
 import MinimalButton from 'components/shared/MinimalButton';
 import RefetchTimer from 'components/shared/RefetchTimer';
-import { ProfileContext } from 'state/ProfilesContextProvider';
+import { useProfilesDispatch, useProfilesState } from 'state/hooks';
 
 // Local Variables
 const Wrapper = styled.div({
@@ -17,7 +17,8 @@ const Wrapper = styled.div({
 
 // Component Definition
 const RefetchProfilesButton: FC = () => {
-  const { dispatch, errorMessage, isFetching, isTimerRunning } = useContext(ProfileContext);
+  const { errorMessage, isFetching, isTimerRunning } = useProfilesState();
+  const dispatch = useProfilesDispatch();
 
   const handleRefetchProfiles = useCallback(() => {
     getProfiles(dispatch);

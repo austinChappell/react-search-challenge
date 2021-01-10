@@ -4,7 +4,6 @@ type ProfileById = Record<string, UserFullProfile | undefined>;
 
 interface State {
   byId: ProfileById;
-  dispatch: Dispatch<ProfilesContextAction>;
   errorMessage: string | null;
   fullProfileErrorMessage: string | null;
   hasFetched: boolean;
@@ -82,7 +81,10 @@ const initialState: Omit<State, 'dispatch'> = {
   profiles: [],
 };
 
-export const ProfileContext = React.createContext(initialState as State);
+export const ProfileStateContext = React.createContext(initialState as State);
+export const ProfileDispatchContext = React.createContext<Dispatch<ProfilesContextAction>>(
+  (undefined as unknown) as Dispatch<ProfilesContextAction>
+);
 
 const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) => {
   let profiles;
@@ -180,7 +182,9 @@ const ProfilesContextProvider: FC = ({ children }) => {
   );
 
   return (
-    <ProfileContext.Provider value={{ ...state, dispatch }}>{children}</ProfileContext.Provider>
+    <ProfileStateContext.Provider value={state}>
+      <ProfileDispatchContext.Provider value={dispatch}>{children}</ProfileDispatchContext.Provider>
+    </ProfileStateContext.Provider>
   );
 };
 

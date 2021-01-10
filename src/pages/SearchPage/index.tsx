@@ -1,10 +1,10 @@
 // External Dependencies
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 
 // Internal Dependencies
 import { useGetProfiles } from 'api/profiles/hooks';
 import Page from 'components/layout/Page';
-import { ProfileContext } from 'state/ProfilesContextProvider';
+import { useProfilesState } from 'state/hooks';
 
 // Local Dependencies
 import Filters from './Filters';
@@ -12,7 +12,7 @@ import Results from './Results';
 
 // Component Definition
 const SearchPage: FC = () => {
-  const { hasFetched } = useContext(ProfileContext);
+  const { hasFetched } = useProfilesState();
 
   useGetProfiles();
 

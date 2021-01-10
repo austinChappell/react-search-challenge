@@ -1,11 +1,11 @@
 // External Dependencies
 import styled from '@emotion/styled';
-import { FC, useCallback, useContext } from 'react';
+import { FC, useCallback } from 'react';
 
 // Internal Dependencies
 import { getProfiles } from 'api/profiles';
 import MinimalButton from 'components/shared/MinimalButton';
-import { ProfileContext } from 'state/ProfilesContextProvider';
+import { useProfilesDispatch } from 'state/hooks';
 import { getPublichPath } from 'utils/getPublicPath';
 
 // Local Dependencies
@@ -37,7 +37,7 @@ const RefetchTimer: FC<Props> = ({
   onTimerEnd,
   onToggleIsTimerRunning,
 }) => {
-  const { dispatch } = useContext(ProfileContext);
+  const dispatch = useProfilesDispatch();
 
   const handleClick = useCallback(() => {
     onToggleIsTimerRunning();

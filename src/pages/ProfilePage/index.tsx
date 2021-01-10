@@ -1,18 +1,18 @@
 // External Dependencies
 import styled from '@emotion/styled';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Internal Dependencies
 import { useGetProfile } from 'api/profiles/hooks';
 import ErrorMessage from 'components/shared/ErrorMessage';
+import Page from 'components/layout/Page';
 import SearchCard from 'components/shared/SearchCard';
-import { ProfileContext } from 'state/ProfilesContextProvider';
+import { useProfilesState } from 'state/hooks';
 
 // Local Dependencies
 import Contact from './Contact';
 import DetailsCard from './DetailsCard';
-import Page from 'components/layout/Page';
 
 // Local Variables
 const Container = styled.section({
@@ -26,7 +26,7 @@ const Container = styled.section({
 const ProfilePage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { fullProfileErrorMessage, isFetchingFullProfile } = useContext(ProfileContext);
+  const { fullProfileErrorMessage, isFetchingFullProfile } = useProfilesState();
 
   const profile = useGetProfile(id);
 
