@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { FC } from 'react';
 import { getPublichPath } from 'utils/getPublicPath';
 
-// Local Dependencies
-import LoadingSpinner from './shared/LoadingSpinner';
+// Internal Dependencies
+import LoadingSpinner from 'components/shared/LoadingSpinner';
 
 // Local Variables
 const Container = styled.div({

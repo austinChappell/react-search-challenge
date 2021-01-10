@@ -2,6 +2,9 @@
 import styled from '@emotion/styled';
 import { FC, useMemo } from 'react';
 
+// Internal Dependencies
+import { getAgeFromDateOfBirth } from 'utils/getAgeFromDateOfBirth';
+
 // Local Typings
 interface Props {
   dateOfBirth?: UserFullProfile['dateOfBirth'];
@@ -13,28 +16,17 @@ const StyledSpan = styled.span({
   marginTop: 32,
 });
 
-const getAge = (dateOfBirth?: string) => {
-  if (!dateOfBirth) {
-    return null;
-  }
-
-  const dob = new Date(dateOfBirth);
-
-  const ageDiffInMilliseconds = Date.now() - dob.getTime();
-  const ageDate = new Date(ageDiffInMilliseconds);
-
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-};
-
 // Component Definition
 const LocationAndAge: FC<Props> = ({ dateOfBirth, location }) => {
-  const age = useMemo(() => getAge(dateOfBirth), [dateOfBirth]);
+  const age = useMemo(() => getAgeFromDateOfBirth(dateOfBirth), [dateOfBirth]);
 
   if (!dateOfBirth && !location) {
     return null;
   }
 
-  return <StyledSpan>{location?.city ? `${age} • ${location.city}` : age}</StyledSpan>;
+  const ageText = age ? `${age} • ` : '';
+
+  return <StyledSpan>{location?.city ? `${ageText}${location.city}` : age}</StyledSpan>;
 };
 
 export default LocationAndAge;

@@ -1,8 +1,8 @@
 // External Dependencies
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
-// Internal Dependencies
-import LoadingScreen from 'components/LoadingScreen';
+// Local Dependencies
+import LoadingScreen from './LoadingScreen';
 
 // Local Typings
 interface Props {
@@ -12,7 +12,9 @@ interface Props {
 
 // Component Definition
 const Page: FC<Props> = ({ children, isLoading, title }) => {
-  document.title = `Match | ${title}`;
+  useEffect(() => {
+    document.title = `Match | ${title}`;
+  }, [title]);
 
   return isLoading ? <LoadingScreen /> : <>{children}</>;
 };
