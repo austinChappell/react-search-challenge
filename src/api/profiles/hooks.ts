@@ -26,7 +26,7 @@ export const useGetProfile = (id: string) => {
   const dispatch = useProfilesDispatch();
 
   useEffect(() => {
-    if (!byId[id]) {
+    if (byId[id] === undefined) {
       getFullProfile(id, dispatch);
     }
   }, [byId, dispatch, id]);

@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, Reducer } from 'react';
 
-type ProfileById = Record<string, UserFullProfile | undefined>;
+type ProfileById = Record<string, UserFullProfile | undefined | null>;
 
 interface State {
   byId: ProfileById;
@@ -26,6 +26,7 @@ interface FetchProfilesAction {
 interface FetchFullProfileErrorAction {
   payload: {
     errorMessage: string;
+    profileId: string;
   };
   type: 'fetchFullProfileError';
 }
@@ -117,6 +118,10 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
     case 'fetchFullProfileError':
       return {
         ...state,
+        byId: {
+          ...state.byId,
+          [action.payload.profileId]: null,
+        },
         fullProfileErrorMessage: action.payload.errorMessage,
         isFetchingFullProfile: false,
       };

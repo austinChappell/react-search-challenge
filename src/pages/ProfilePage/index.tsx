@@ -30,8 +30,10 @@ const ProfilePage: FC = () => {
 
   const profile = useGetProfile(id);
 
+  const isLoading = isFetchingFullProfile || profile === undefined;
+
   return (
-    <Page isLoading={isFetchingFullProfile} title={profile?.firstName ?? 'Profile'}>
+    <Page isLoading={isLoading} title={profile?.firstName ?? 'Profile'}>
       <Container>
         {profile ? (
           <>
