@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { getPublichPath } from 'utils/getPublicPath';
 
 const Header = styled.header({
   borderBottom: `1px solid #efefef`,
@@ -15,7 +16,7 @@ const BaseLayout: FC = ({ children }) => (
   <>
     <Header>
       <Link to="/">
-        <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="match" width="110" />
+        <img src={getPublichPath('/logo.svg')} alt="match" width="110" />
       </Link>
     </Header>
 

@@ -3,6 +3,7 @@ import { getProfiles } from 'api/profiles';
 import MinimalButton from 'components/shared/MinimalButton';
 import { FC, useCallback, useContext } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
+import { getPublichPath } from 'utils/getPublicPath';
 import LoadingSpinner from './LoadingSpinner';
 import InfiniteProgressBar from './ProgressBar';
 
@@ -52,13 +53,17 @@ const RefetchTimer: FC<Props> = ({
       <MinimalButton onClick={handleClick}>
         <img
           alt={isTimerRunning ? 'pause' : 'resume'}
-          src={isTimerRunning ? './pause.svg' : './play.svg'}
+          src={isTimerRunning ? getPublichPath('/pause.svg') : getPublichPath('/play.svg')}
           width={22}
         />
       </MinimalButton>
 
       <MinimalButton disabled={isFetching} onClick={handleClickRefetch}>
-        {isFetching ? <LoadingSpinner /> : <img alt="reload" src="./reload.svg" width={22} />}
+        {isFetching ? (
+          <LoadingSpinner />
+        ) : (
+          <img alt="reload" src={getPublichPath('/reload.svg')} width={22} />
+        )}
       </MinimalButton>
     </Wrapper>
   );

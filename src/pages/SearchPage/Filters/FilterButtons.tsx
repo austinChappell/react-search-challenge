@@ -2,6 +2,7 @@ import React, { useCallback, useContext } from 'react';
 
 import { ProfileContext } from 'state/ProfilesContextProvider';
 import MinimalButton from 'components/shared/MinimalButton';
+import { getPublichPath } from 'utils/getPublicPath';
 
 const FilterButtons = () => {
   const { dispatch, isFiltered } = useContext(ProfileContext);
@@ -21,15 +22,19 @@ const FilterButtons = () => {
   return (
     <div>
       <MinimalButton onClick={handleToggleFilter}>
-        <img src={isFiltered ? 'filter.svg' : 'filter-empty.svg'} width={22} alt="filter" />
+        <img
+          src={getPublichPath(isFiltered ? '/filter.svg' : '/filter-empty.svg')}
+          width={22}
+          alt="filter"
+        />
       </MinimalButton>
 
       <MinimalButton onClick={handleSortAscending}>
-        <img src="./ascending.svg" width={22} alt="Sort ascending" />
+        <img src={getPublichPath('./ascending.svg')} width={22} alt="Sort ascending" />
       </MinimalButton>
 
       <MinimalButton onClick={handleSortDescending}>
-        <img src="./descending.svg" width={22} alt="Sort descending" />
+        <img src={getPublichPath('./descending.svg')} width={22} alt="Sort descending" />
       </MinimalButton>
     </div>
   );

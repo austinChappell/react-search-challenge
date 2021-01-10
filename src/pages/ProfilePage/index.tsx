@@ -1,4 +1,5 @@
 import { useGetProfile } from 'api/profiles/hooks';
+import LoadingSpinner from 'components/shared/LoadingSpinner';
 import { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProfileContext } from 'state/ProfilesContextProvider';
@@ -6,12 +7,12 @@ import { ProfileContext } from 'state/ProfilesContextProvider';
 const ProfilePage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { isFetching } = useContext(ProfileContext);
+  const { isFetchingFullProfile } = useContext(ProfileContext);
 
   const profile = useGetProfile(id);
 
-  if (isFetching) {
-    return <p>Loading...</p>;
+  if (isFetchingFullProfile) {
+    return <LoadingSpinner />;
   }
 
   if (!profile) {
