@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from 'state/ProfilesContextProvider';
-import { getProfiles } from '.';
+import { getFullProfile, getProfiles } from '.';
 
 export const useGetProfiles = () => {
   const { dispatch, hasFetched, isFetching, isFiltered, profiles } = useContext(ProfileContext);
@@ -20,11 +20,14 @@ export const useGetProfiles = () => {
   return localProfiles;
 };
 
-export const useGetProfile = (id: number) => {
-  // have to get all right now since there is not a live API
-  useGetProfiles();
+export const useGetProfile = (id: string) => {
+  const { byId, dispatch } = useContext(ProfileContext);
 
-  const { byId } = useContext(ProfileContext);
+  useEffect(() => {
+    if (!byId[id]) {
+      getFullProfile(id, dispatch);
+    }
+  }, [byId, dispatch, id]);
 
   return byId[id];
 };

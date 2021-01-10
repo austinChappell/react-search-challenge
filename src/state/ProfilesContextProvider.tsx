@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, Reducer } from 'react';
 
-type ProfileById = Record<number, UserListUser>;
+type ProfileById = Record<string, UserFullProfile>;
 
 interface State {
   byId: ProfileById;
@@ -8,6 +8,7 @@ interface State {
   errorMessage: string | null;
   hasFetched: boolean;
   isFetching: boolean;
+  isFetchingFullProfile: boolean;
   isFiltered: boolean;
   isTimerRunning: boolean;
   profiles: UserListUser[];
@@ -28,6 +29,12 @@ interface FetchProfilesErrorAction {
   };
   type: 'fetchProfilesError';
 }
+interface SetFullProfileAction {
+  payload: {
+    profile: UserFullProfile;
+  };
+  type: 'setFullProfile';
+}
 interface SetProfilesAction {
   payload: {
     profiles: UserListUser[];
@@ -36,6 +43,9 @@ interface SetProfilesAction {
 }
 interface ToggleFilterAction {
   type: 'toggleIsFiltered';
+}
+interface ToggleIsFetchingFullProfileAction {
+  type: 'toggleIsFetchingFullProfile';
 }
 interface ToggleIsTimerRunningAction {
   type: 'toggleIsTimerRunning';
@@ -46,8 +56,10 @@ export type ProfilesContextAction =
   | DescendingAction
   | FetchProfilesAction
   | FetchProfilesErrorAction
+  | SetFullProfileAction
   | SetProfilesAction
   | ToggleFilterAction
+  | ToggleIsFetchingFullProfileAction
   | ToggleIsTimerRunningAction;
 
 const initialState: Omit<State, 'dispatch'> = {
@@ -55,6 +67,7 @@ const initialState: Omit<State, 'dispatch'> = {
   errorMessage: null,
   hasFetched: false,
   isFetching: false,
+  isFetchingFullProfile: false,
   isFiltered: false,
   isTimerRunning: true,
   profiles: [],
@@ -98,26 +111,30 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
         isTimerRunning: false,
       };
 
-    case 'setProfiles':
-      const byId: ProfileById = action.payload.profiles.reduce(
-        (prev: ProfileById, curr) => ({
-          ...prev,
-          [curr.id]: curr,
-        }),
-        {}
-      );
-
+    case 'setFullProfile':
       return {
         ...state,
         byId: {
           ...state.byId,
-          ...byId,
+          [action.payload.profile.id]: { ...action.payload.profile },
         },
+        isFetchingFullProfile: false,
+      };
+
+    case 'setProfiles':
+      return {
+        ...state,
         errorMessage: null,
         hasFetched: true,
         isFetching: false,
         isTimerRunning: true,
         profiles: action.payload.profiles,
+      };
+
+    case 'toggleIsFetchingFullProfile':
+      return {
+        ...state,
+        isFetchingFullProfile: !state.isFetchingFullProfile,
       };
 
     case 'toggleIsFiltered':

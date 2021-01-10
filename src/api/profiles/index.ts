@@ -9,6 +9,12 @@ export const fetchProfiles = async () => {
   return response.data;
 };
 
+export const fetchFullProfile = async (id: string) => {
+  const response: UserFullProfile = await fetchData(`/user/${id}`);
+
+  return response;
+};
+
 export const getProfiles = async (dispatch: Dispatch<ProfilesContextAction>) => {
   dispatch({
     type: 'fetchProfiles',
@@ -29,5 +35,24 @@ export const getProfiles = async (dispatch: Dispatch<ProfilesContextAction>) => 
       },
       type: 'fetchProfilesError',
     });
+  }
+};
+
+export const getFullProfile = async (id: string, dispatch: Dispatch<ProfilesContextAction>) => {
+  dispatch({
+    type: 'toggleIsFetchingFullProfile',
+  });
+
+  try {
+    const profile = await fetchFullProfile(id);
+
+    dispatch({
+      payload: {
+        profile,
+      },
+      type: 'setFullProfile',
+    });
+  } catch (error) {
+    console.error(error);
   }
 };

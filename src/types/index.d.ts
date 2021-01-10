@@ -14,3 +14,25 @@ interface UserListUser {
   picture: string;
   title: string;
 }
+
+interface UserFullProfile {
+  dateOfBirth: Date;
+  email: string;
+  firstName: string;
+  gender: string;
+  id: string;
+  lastName: string;
+  location: Location;
+  phone: string;
+  picture: string;
+  registerDate: Date;
+  title: string;
+}
+
+interface Location {
+  city: string;
+  country: string;
+  state: string;
+  street: string;
+  timezone: string;
+}

@@ -8,7 +8,7 @@ const ProfilePage: FC = () => {
 
   const { isFetching } = useContext(ProfileContext);
 
-  const profile = useGetProfile(Number(id));
+  const profile = useGetProfile(id);
 
   if (isFetching) {
     return <p>Loading...</p>;
