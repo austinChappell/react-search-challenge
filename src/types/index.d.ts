@@ -16,7 +16,7 @@ interface UserListUser {
 }
 
 interface UserFullProfile {
-  dateOfBirth: Date;
+  dateOfBirth: string;
   email: string;
   firstName: string;
   gender: string;
@@ -25,7 +25,7 @@ interface UserFullProfile {
   location: Location;
   phone: string;
   picture: string;
-  registerDate: Date;
+  registerDate: string;
   title: string;
 }
 

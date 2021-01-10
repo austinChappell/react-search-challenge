@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
 
-import SearchCard from './SearchCard';
+import SearchCard from '../../components/shared/SearchCard';
 import { useGetProfiles } from 'api/profiles/hooks';
+import { Link } from 'react-router-dom';
+import { paths } from 'constants/paths';
 
 const Grid = styled.div({
   display: 'grid',
@@ -16,15 +18,9 @@ const Results: FC = () => {
   return (
     <Grid>
       {profiles.map((profile) => (
-        <SearchCard
-          email={profile.email}
-          firstName={profile.firstName}
-          id={profile.id}
-          key={profile.id}
-          lastName={profile.lastName}
-          picture={profile.picture}
-          title={profile.title}
-        />
+        <Link to={`/${paths.profiles}/${profile.id}`} key={profile.id}>
+          <SearchCard firstName={profile.firstName} picture={profile.picture} />
+        </Link>
       ))}
     </Grid>
   );
