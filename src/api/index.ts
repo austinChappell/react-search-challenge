@@ -1,5 +1,5 @@
 export const fetchData = async (endpoint: string) => {
-  const appId = '5ffa46e8ff4678e04b237407';
+  const appId = '5ffa9a1ede9ca16d8ca7af7c';
   const baseUrl = 'https://dummyapi.io/data/api';
 
   try {
