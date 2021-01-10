@@ -6,13 +6,13 @@ import { useParams } from 'react-router-dom';
 // Internal Dependencies
 import { useGetProfile } from 'api/profiles/hooks';
 import ErrorMessage from 'components/shared/ErrorMessage';
-import LoadingSpinner from 'components/shared/LoadingSpinner';
 import SearchCard from 'components/shared/SearchCard';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 
 // Local Dependencies
 import Contact from './Contact';
 import DetailsCard from './DetailsCard';
+import Page from 'components/Page';
 
 // Local Variables
 const Container = styled.section({
@@ -30,34 +30,32 @@ const ProfilePage: FC = () => {
 
   const profile = useGetProfile(id);
 
-  if (isFetchingFullProfile) {
-    return <LoadingSpinner />;
-  }
-
-  if (!profile) {
-    return <ErrorMessage>Profile not found...</ErrorMessage>;
-  }
-
   return (
-    <Container>
-      <SearchCard
-        dateOfBirth={profile.dateOfBirth}
-        firstName={profile.firstName}
-        picture={profile.picture}
-        location={profile.location}
-      />
+    <Page isLoading={isFetchingFullProfile}>
+      {profile ? (
+        <Container>
+          <SearchCard
+            dateOfBirth={profile.dateOfBirth}
+            firstName={profile.firstName}
+            picture={profile.picture}
+            location={profile.location}
+          />
 
-      <Contact email={profile.email} phone={profile.phone} />
+          <Contact email={profile.email} phone={profile.phone} />
 
-      <DetailsCard
-        dateOfBirth={profile.dateOfBirth}
-        firstName={profile.firstName}
-        gender={profile.gender}
-        lastName={profile.lastName}
-        location={profile.location}
-        registerDate={profile.registerDate}
-      />
-    </Container>
+          <DetailsCard
+            dateOfBirth={profile.dateOfBirth}
+            firstName={profile.firstName}
+            gender={profile.gender}
+            lastName={profile.lastName}
+            location={profile.location}
+            registerDate={profile.registerDate}
+          />
+        </Container>
+      ) : (
+        <ErrorMessage>Profile not found...</ErrorMessage>
+      )}
+    </Page>
   );
 };
 

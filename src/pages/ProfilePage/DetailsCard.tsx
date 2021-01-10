@@ -14,7 +14,7 @@ interface Props {
 
 // Local Variables
 const Card = styled.div({
-  border: '1px solid black',
+  border: '1px solid lightgray',
   borderRadius: 8,
   padding: 24,
 });
@@ -27,7 +27,7 @@ const Title = styled.h2({
 const CardContent = styled.div({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: 32,
+  gap: 40,
 });
 
 const Subtitle = styled.h3({

@@ -14,7 +14,7 @@ interface Props extends BarProps {
 
 // Local Variables
 const Container = styled.div({
-  border: '1px solid black',
+  border: '1px solid lightgray',
   borderRadius: 4,
   width: 100,
 });
