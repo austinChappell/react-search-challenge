@@ -2,11 +2,19 @@ export const fetchData = async (endpoint: string) => {
   const appId = '5ffa46e8ff4678e04b237407';
   const baseUrl = 'https://dummyapi.io/data/api';
 
-  const response = await fetch(`${baseUrl}${endpoint}`, {
-    headers: {
-      'app-id': appId,
-    },
-  });
+  try {
+    const response = await fetch(`${baseUrl}${endpoint}`, {
+      headers: {
+        'app-id': appId,
+      },
+    });
 
-  return response.json();
+    if (response.status >= 400) {
+      throw new Error('Unable to fetch.');
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
 };
