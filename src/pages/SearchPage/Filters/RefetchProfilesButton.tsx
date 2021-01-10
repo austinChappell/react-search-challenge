@@ -12,15 +12,17 @@ const Wrapper = styled.div({
 });
 
 const RefetchProfilesButton: FC = () => {
-  const { dispatch, errorMessage, isFetching } = useContext(ProfileContext);
+  const { dispatch, errorMessage, isFetching, isTimerRunning } = useContext(ProfileContext);
 
   const handleRefetchProfiles = useCallback(() => {
     getProfiles(dispatch);
   }, [dispatch]);
 
-  if (isFetching) {
-    return <p>Loading...</p>;
-  }
+  const handleToggleIsTimerRunning = useCallback(() => {
+    dispatch({
+      type: 'toggleIsTimerRunning',
+    });
+  }, [dispatch]);
 
   if (errorMessage) {
     return (
@@ -31,7 +33,14 @@ const RefetchProfilesButton: FC = () => {
     );
   }
 
-  return <RefetchTimer isFetching={isFetching} onTimerEnd={handleRefetchProfiles} />;
+  return (
+    <RefetchTimer
+      isFetching={isFetching}
+      isTimerRunning={isTimerRunning}
+      onTimerEnd={handleRefetchProfiles}
+      onToggleIsTimerRunning={handleToggleIsTimerRunning}
+    />
+  );
 };
 
 export default RefetchProfilesButton;

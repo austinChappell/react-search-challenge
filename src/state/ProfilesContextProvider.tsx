@@ -9,6 +9,7 @@ interface State {
   hasFetched: boolean;
   isFetching: boolean;
   isFiltered: boolean;
+  isTimerRunning: boolean;
   profiles: Profile[];
 }
 
@@ -36,6 +37,9 @@ interface SetProfilesAction {
 interface ToggleFilterAction {
   type: 'toggleIsFiltered';
 }
+interface ToggleIsTimerRunningAction {
+  type: 'toggleIsTimerRunning';
+}
 
 export type ProfilesContextAction =
   | AscendingAction
@@ -43,7 +47,8 @@ export type ProfilesContextAction =
   | FetchProfilesAction
   | FetchProfilesErrorAction
   | SetProfilesAction
-  | ToggleFilterAction;
+  | ToggleFilterAction
+  | ToggleIsTimerRunningAction;
 
 const initialState: Omit<State, 'dispatch'> = {
   byId: {},
@@ -51,6 +56,7 @@ const initialState: Omit<State, 'dispatch'> = {
   hasFetched: false,
   isFetching: false,
   isFiltered: false,
+  isTimerRunning: true,
   profiles: [],
 };
 
@@ -121,6 +127,12 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
         ...state,
         errorMessage: null,
         isFiltered,
+      };
+
+    case 'toggleIsTimerRunning':
+      return {
+        ...state,
+        isTimerRunning: !state.isTimerRunning,
       };
 
     default:
