@@ -20,9 +20,9 @@ const ProfilePage: FC = () => {
 
   return (
     <>
-      <h2>{profile.handle}</h2>
+      <h2>{profile.email}</h2>
 
-      <img alt="potential date" src={profile.photoUrl} />
+      <img alt="potential date" src={profile.picture} />
     </>
   );
 };

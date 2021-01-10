@@ -14,7 +14,7 @@ export const useGetProfiles = () => {
   }, [dispatch, hasFetched, isFetching]);
 
   useEffect(() => {
-    setLocalProfiles(isFiltered ? profiles.filter((profile) => profile.age < 30) : profiles);
+    setLocalProfiles(isFiltered ? profiles.filter((profile) => profile.title !== 'mr') : profiles);
   }, [isFiltered, profiles]);
 
   return localProfiles;

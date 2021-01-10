@@ -1,14 +1,11 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import Handle from './Handle';
-import LocationAndAge from './LocationAndAge';
-import PhotoCount from './PhotoCount';
 
 interface Props {
-  age: Profile['age'];
-  handle: Profile['handle'];
-  location: Profile['location'];
-  photoCount: Profile['photoCount'];
+  email: UserListUser['email'];
+  firstName: UserListUser['firstName'];
+  title: UserListUser['title'];
 }
 
 const Wrapper = styled.div({
@@ -26,14 +23,25 @@ const FlexContainer = styled.div({
   marginBottom: 4,
 });
 
-const UserInfo: FC<Props> = ({ age, handle, location, photoCount }) => (
+const EmailSpan = styled.span({
+  maxWidth: '70%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});
+
+const Title = styled.span({
+  marginRight: 4,
+});
+
+const UserInfo: FC<Props> = ({ email, firstName, title }) => (
   <Wrapper>
-    <Handle>{handle}</Handle>
+    <Handle>{firstName}</Handle>
 
     <FlexContainer>
-      <LocationAndAge age={age} location={location} />
+      <EmailSpan>{email}</EmailSpan>
 
-      <PhotoCount photoCount={photoCount} />
+      <Title>{title}</Title>
     </FlexContainer>
   </Wrapper>
 );

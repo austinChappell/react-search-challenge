@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, Reducer } from 'react';
 
-type ProfileById = Record<number, Profile>;
+type ProfileById = Record<number, UserListUser>;
 
 interface State {
   byId: ProfileById;
@@ -10,7 +10,7 @@ interface State {
   isFetching: boolean;
   isFiltered: boolean;
   isTimerRunning: boolean;
-  profiles: Profile[];
+  profiles: UserListUser[];
 }
 
 interface AscendingAction {
@@ -30,7 +30,7 @@ interface FetchProfilesErrorAction {
 }
 interface SetProfilesAction {
   payload: {
-    profiles: Profile[];
+    profiles: UserListUser[];
   };
   type: 'setProfiles';
 }
@@ -68,7 +68,7 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
   switch (action.type) {
     case 'ascending':
       profiles = [...state.profiles];
-      profiles.sort((profileA, profileB) => (profileA.handle > profileB.handle ? 1 : -1));
+      profiles.sort((profileA, profileB) => (profileA.email > profileB.email ? 1 : -1));
       return {
         ...state,
         profiles,
@@ -76,7 +76,7 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
 
     case 'descending':
       profiles = [...state.profiles];
-      profiles.sort((profileA, profileB) => (profileA.handle < profileB.handle ? 1 : -1));
+      profiles.sort((profileA, profileB) => (profileA.email < profileB.email ? 1 : -1));
       return {
         ...state,
         profiles,

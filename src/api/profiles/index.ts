@@ -1,20 +1,12 @@
+import { fetchData } from 'api';
 import { Dispatch } from 'react';
 
 import { ProfilesContextAction } from 'state/ProfilesContextProvider';
 
-// using this mock an API delay
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export const fetchProfiles = async () => {
-  await sleep(500);
+  const response: UserListResponse = await fetchData('/user');
 
-  const response = await fetch(`${process.env.PUBLIC_URL}/profiles.json`);
-
-  const profiles: Profile[] = await response.json();
-
-  return profiles;
+  return response.data;
 };
 
 export const getProfiles = async (dispatch: Dispatch<ProfilesContextAction>) => {

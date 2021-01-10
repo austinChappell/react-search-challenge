@@ -4,40 +4,33 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import UserInfo from './UserInfo';
 
-export const Card = styled.div({
+const Card = styled.div({
   alignItems: 'center',
   display: 'flex',
   justifyContent: 'center',
 });
 
-export const AvatarContainer = styled.div({
+const AvatarContainer = styled.div({
   border: '1px solid lightgray',
   borderRadius: 8,
   boxShadow: '0 3px 6px lightgray, 0 3px 6px lightgray',
   overflow: 'hidden',
 });
 
-export const Avatar = styled.div({
+const Avatar = styled.div({
   height: '200px',
   position: 'relative',
   width: '200px',
 });
 
-const SearchCard: FC<Profile> = ({
-  age = 99,
-  handle = '',
-  id,
-  location = '',
-  photoCount = 0,
-  photoUrl = '',
-}) => (
+const SearchCard: FC<UserListUser> = ({ email, firstName, id, picture, title }) => (
   <Link to={`/${paths.profiles}/${id}`}>
     <Card>
       <AvatarContainer>
         <Avatar>
-          <img src={photoUrl} alt="potential date" />
+          <img src={picture} alt="potential date" width="100%" />
 
-          <UserInfo age={age} handle={handle} location={location} photoCount={photoCount} />
+          <UserInfo firstName={firstName} email={email} title={title} />
         </Avatar>
       </AvatarContainer>
     </Card>

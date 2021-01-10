@@ -17,13 +17,13 @@ const Results: FC = () => {
     <Grid>
       {profiles.map((profile) => (
         <SearchCard
-          age={profile.age}
-          handle={profile.handle}
+          email={profile.email}
+          firstName={profile.firstName}
           id={profile.id}
           key={profile.id}
-          location={profile.location}
-          photoCount={profile.photoCount}
-          photoUrl={profile.photoUrl}
+          lastName={profile.lastName}
+          picture={profile.picture}
+          title={profile.title}
         />
       ))}
     </Grid>
