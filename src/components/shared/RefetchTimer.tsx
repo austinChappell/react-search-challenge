@@ -1,11 +1,9 @@
 // External Dependencies
 import styled from '@emotion/styled';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback } from 'react';
 
 // Internal Dependencies
-import { getProfiles } from 'api/profiles';
 import MinimalButton from 'components/shared/MinimalButton';
-import { useProfilesDispatch, useProfilesState } from 'state/hooks';
 import { getPublichPath } from 'utils/getPublicPath';
 
 // Local Dependencies
@@ -37,24 +35,12 @@ const RefetchTimer: FC<Props> = ({
   onTimerEnd,
   onToggleIsTimerRunning,
 }) => {
-  const dispatch = useProfilesDispatch();
-
-  const handleClick = useCallback(() => {
-    onToggleIsTimerRunning();
-  }, [onToggleIsTimerRunning]);
-
-  const handleClickRefetch = useCallback(() => {
-    handleClick();
-    getProfiles(dispatch);
-    handleClick();
-  }, [dispatch, handleClick]);
-
-  const handleTimerEnd = useCallback(() => {
+  const handleRepeat = useCallback(() => {
     // make sure the API is not called repeatedly when the user is away
     if (document.hasFocus()) {
       onTimerEnd();
     }
-  }, []);
+  }, [onTimerEnd]);
 
   return (
     <Wrapper>
@@ -62,10 +48,10 @@ const RefetchTimer: FC<Props> = ({
         direction="reverse"
         intervalInSeconds={refetchInterval}
         isPaused={!isTimerRunning || isFetching}
-        onRepeat={handleTimerEnd}
+        onRepeat={handleRepeat}
       />
 
-      <MinimalButton onClick={handleClick}>
+      <MinimalButton onClick={onToggleIsTimerRunning}>
         <img
           alt={isTimerRunning ? 'pause' : 'resume'}
           src={isTimerRunning ? getPublichPath('/pause.svg') : getPublichPath('/play.svg')}
@@ -73,7 +59,7 @@ const RefetchTimer: FC<Props> = ({
         />
       </MinimalButton>
 
-      <MinimalButton disabled={isFetching} onClick={handleClickRefetch}>
+      <MinimalButton disabled={isFetching} onClick={onTimerEnd}>
         {isFetching ? (
           <LoadingSpinner />
         ) : (
