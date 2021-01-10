@@ -6,15 +6,14 @@ import SearchCard from 'components/shared/SearchCard';
 import { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProfileContext } from 'state/ProfilesContextProvider';
+import Contact from './Contact';
+import DetailsCard from './DetailsCard';
 
 const Container = styled.section({
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-});
-
-const Title = styled.h2({
-  fontSize: 32,
+  gap: 24,
 });
 
 const ProfilePage: FC = () => {
@@ -43,9 +42,16 @@ const ProfilePage: FC = () => {
         location={profile.location}
       />
 
-      <Title>
-        {profile.firstName} {profile.lastName}
-      </Title>
+      <Contact email={profile.email} phone={profile.phone} />
+
+      <DetailsCard
+        dateOfBirth={profile.dateOfBirth}
+        firstName={profile.firstName}
+        gender={profile.gender}
+        lastName={profile.lastName}
+        location={profile.location}
+        registerDate={profile.registerDate}
+      />
     </Container>
   );
 };
