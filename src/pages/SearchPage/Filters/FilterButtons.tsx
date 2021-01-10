@@ -1,10 +1,18 @@
 // External Dependencies
+import styled from '@emotion/styled';
 import React, { FC, useCallback, useContext } from 'react';
 
 // Internal Dependencies
 import MinimalButton from 'components/shared/MinimalButton';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 import { getPublichPath } from 'utils/getPublicPath';
+
+// Local Variables
+const Container = styled.div({
+  display: 'flex',
+  flexGrow: 1,
+  justifyContent: 'flex-end',
+});
 
 // Component Definition
 const FilterButtons: FC = () => {
@@ -23,7 +31,7 @@ const FilterButtons: FC = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Container>
       <MinimalButton onClick={handleToggleFilter}>
         <img
           src={getPublichPath(isFiltered ? '/filter.svg' : '/filter-empty.svg')}
@@ -39,7 +47,7 @@ const FilterButtons: FC = () => {
       <MinimalButton onClick={handleSortDescending}>
         <img src={getPublichPath('./descending.svg')} width={22} alt="Sort descending" />
       </MinimalButton>
-    </div>
+    </Container>
   );
 };
 

@@ -10,6 +10,7 @@ import RefetchProfilesButton from './RefetchProfilesButton';
 const Flex = styled.div({
   alignItems: 'baseline',
   display: 'flex',
+  flexWrap: 'wrap',
   justifyContent: 'space-between',
 });
 
