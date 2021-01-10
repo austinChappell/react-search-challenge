@@ -12,7 +12,7 @@ import { ProfileContext } from 'state/ProfilesContextProvider';
 // Local Dependencies
 import Contact from './Contact';
 import DetailsCard from './DetailsCard';
-import Page from 'components/Page';
+import Page from 'components/layout/Page';
 
 // Local Variables
 const Container = styled.section({
@@ -31,7 +31,7 @@ const ProfilePage: FC = () => {
   const profile = useGetProfile(id);
 
   return (
-    <Page isLoading={isFetchingFullProfile}>
+    <Page isLoading={isFetchingFullProfile} title={profile?.firstName ?? 'Profile'}>
       {profile ? (
         <Container>
           <SearchCard

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import ProfilePage from 'pages/ProfilePage';
 import SearchPage from 'pages/SearchPage';
-import BaseLayout from 'components/BaseLayout';
+import BaseLayout from 'components/layout/BaseLayout';
 
 const Routes: FC = () => (
   <Router>

@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, Reducer } from 'react';
 
-type ProfileById = Record<string, UserFullProfile>;
+type ProfileById = Record<string, UserFullProfile | undefined>;
 
 interface State {
   byId: ProfileById;

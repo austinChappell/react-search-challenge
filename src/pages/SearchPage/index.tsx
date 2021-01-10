@@ -3,7 +3,7 @@ import React, { FC, useContext } from 'react';
 
 // Internal Dependencies
 import { useGetProfiles } from 'api/profiles/hooks';
-import Page from 'components/Page';
+import Page from 'components/layout/Page';
 import { ProfileContext } from 'state/ProfilesContextProvider';
 
 // Local Dependencies
@@ -17,7 +17,7 @@ const SearchPage: FC = () => {
   useGetProfiles();
 
   return (
-    <Page isLoading={!hasFetched}>
+    <Page isLoading={!hasFetched} title="Profiles">
       <Filters />
 
       <Results />
