@@ -125,6 +125,7 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
       return {
         ...state,
         errorMessage: action.payload.errorMessage,
+        hasFetched: true,
         isFetching: false,
         isTimerRunning: false,
       };
