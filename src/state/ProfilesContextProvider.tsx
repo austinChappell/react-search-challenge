@@ -112,7 +112,6 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
         ...state,
         errorMessage: null,
         isFetching: true,
-        isTimerRunning: false,
       };
 
     case 'fetchFullProfileError':
@@ -151,7 +150,6 @@ const profilesReducer: Reducer<State, ProfilesContextAction> = (state, action) =
         errorMessage: null,
         hasFetched: true,
         isFetching: false,
-        isTimerRunning: true,
         profiles: action.payload.profiles,
       };
 
